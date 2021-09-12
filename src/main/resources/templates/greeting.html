@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Properly escaped</h1>
+<p th:text="'Hello, ' + ${name} + '!'"></p>
+<h1>Unescaped Text</h1>
+<p th:utext="'Hello, ' + ${name} + '!'"></p>
+</body>
+</html>
