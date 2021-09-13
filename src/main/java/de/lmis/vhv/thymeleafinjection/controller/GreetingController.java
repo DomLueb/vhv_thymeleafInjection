@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class GreetingController {
-    @PostMapping("/greeting")
-    public String acceptGreeting(@RequestParam("name") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
-    }
-
+//    @PostMapping("/greeting")
+//    public String acceptGreeting(@RequestParam("name") String name, Model model) {
+//        model.addAttribute("name", name);
+//        return "greeting";
+//    }
+//
     @GetMapping("/greeting")
     public String getGreeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
