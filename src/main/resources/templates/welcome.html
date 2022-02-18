@@ -8,7 +8,12 @@
 <h1>Welcome</h1>
 
 <form method="post" th:action="@{/greeting}">
-  <input autofocus name="name" placeholder="Name" required type="text">
+  <label for="name">Name:</label>
+  <input id="name" autofocus name="name" placeholder="Name" required type="text"/>
+  <br/>
+  <label for="duties">Meine Aufgaben bei der <strong>VHV</strong>:</label>
+  <textarea id="duties" name="duties" placeholder="duties" required rows="5" cols="50"></textarea>
+  <br/>
   <button type="submit">
     Submit
   </button>

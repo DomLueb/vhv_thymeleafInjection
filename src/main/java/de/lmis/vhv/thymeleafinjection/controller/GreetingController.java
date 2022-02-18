@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class GreetingController {
     @PostMapping("/greeting")
-    public String acceptGreeting(@RequestParam("name") String name, Model model) {
-        String safe = Jsoup.clean(name, Safelist.basic());
-        model.addAttribute("name", safe);
+    public String acceptGreeting(@RequestParam("name") String name, @RequestParam("duties") String duties, Model model) {
+        var emphasizedDuties = this.emphasizeVhvText(duties);
+        String safeDuties = Jsoup.clean(emphasizedDuties, Safelist.basic());
+        model.addAttribute("name", name);
+        model.addAttribute("duties", safeDuties);
         return "greeting";
     }
 
@@ -20,6 +22,10 @@ public class GreetingController {
     public String getGreeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
         model.addAttribute("name", name);
         return "greeting";
+    }
+
+    private String emphasizeVhvText(String baseText) {
+        return baseText.replace("VHV","<strong>VHV</strong>");
     }
 
 }
