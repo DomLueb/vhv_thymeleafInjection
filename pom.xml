@@ -33,19 +33,6 @@
 			<optional>true</optional>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.webjars</groupId>-->
-<!--			<artifactId>webjars-locator</artifactId>-->
-<!--			<version>0.40</version>-->
-<!--		</dependency>-->
-
-		<dependency>
-		  <!-- jsoup HTML parser library @ https://jsoup.org/ -->
-			<groupId>org.jsoup</groupId>
-		  <artifactId>jsoup</artifactId>
-		  <version>1.14.3</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
