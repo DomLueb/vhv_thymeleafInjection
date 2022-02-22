@@ -1,18 +1,29 @@
 package de.lmis.vhv.thymeleafinjection.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebSecConfig extends WebSecurityConfigurerAdapter {
+public class WebSecConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .cors().and()
+                .csrf().and()
+                .authorizeRequests()
                 .mvcMatchers("/login").permitAll()
                 .mvcMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated().and()
@@ -26,7 +37,28 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER")
-                .and().withUser("admin").password("{noop}admin").roles("ADMIN");
+        var encodedPassword = encoder().encode("myPassword");
+        auth
+                .inMemoryAuthentication()
+                .passwordEncoder(encoder())
+                .withUser("user").password(encodedPassword).roles("USER")
+                .and().withUser("admin").password(encodedPassword).roles("ADMIN");
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedMethods(
+                        HttpMethod.GET.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.DELETE.name(),
+                        HttpMethod.PUT.name())
+                .allowedOrigins("http://localhost:4200")
+//                .allowCredentials(false)
+                .allowCredentials(true)
+//                .exposedHeaders(HttpHeaders.LOCATION)
+        ;
+    }
+
+
 }
