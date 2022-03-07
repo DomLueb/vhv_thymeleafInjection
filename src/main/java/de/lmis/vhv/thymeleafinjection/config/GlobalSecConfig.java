@@ -25,6 +25,7 @@ public class GlobalSecConfig {
                 .builder()
                 .username("admin")
                 .password("{pbkdf2}" + p2)
+//                .password("{noop}admin")
                 .roles("ADMIN")
                 .build();
 

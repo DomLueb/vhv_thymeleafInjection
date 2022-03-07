@@ -11,7 +11,8 @@ public class WebSecConfig {
     @Bean
     @Order(100)
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(auth -> {
+        http
+                .authorizeRequests(auth -> {
                     auth.mvcMatchers("/login").permitAll();
                     auth.mvcMatchers("/admin").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
